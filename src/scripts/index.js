@@ -4,6 +4,13 @@ import { initialCards } from "../components/cards";
 import { createCard, deleteCard, likeCard } from "../components/card";
 import { openPopUp, closePopUp } from "../components/modal";
 
+import logo from "../images/logo.svg";
+import avatar from "../images/avatar.jpg";
+
+// Устанавливаем правильные пути в HTML
+document.querySelector(".logo").src = logo;
+document.querySelector(".profile__image").style.backgroundImage = `url(${avatar})`;
+
 // DOM узлы: Кнопки
 const editProfileButton = document.querySelector(".profile__edit-button");
 const addProfileButton = document.querySelector(".profile__add-button");

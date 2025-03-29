@@ -8,7 +8,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "main.js",
-    publicPath: "",
+    publicPath: "/",
   },
   mode: "development",
   devServer: {
@@ -16,6 +16,7 @@ module.exports = {
     compress: true,
     port: 8080,
     open: true,
+    historyApiFallback: true,
   },
   module: {
     rules: [
