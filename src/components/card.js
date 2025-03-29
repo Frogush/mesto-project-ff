@@ -1,4 +1,4 @@
-import { openPopUp } from "./modal.js";
+import { openPopUpImage } from "./modal.js";
 
 // @todo: Темплейт карточки
 const cardTemplate = document.querySelector("#card-template").content;
@@ -7,7 +7,7 @@ const cardTemplate = document.querySelector("#card-template").content;
 const placesList = document.querySelector(".places__list");
 
 // @todo: Функция создания карточки
-export function createCard( name, link, onDelete, onLike, onImageClick ) {
+export function createCard(name, link, onDelete, onLike) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");
@@ -15,12 +15,12 @@ export function createCard( name, link, onDelete, onLike, onImageClick ) {
   const likeButton = cardElement.querySelector(".card__like-button");
 
   cardImage.src = link;
-  cardImage.alt = name;
+  cardImage.alt = "Изображение " + name;
   cardTitle.textContent = name;
 
   deleteButton.addEventListener("click", () => onDelete(cardElement));
   likeButton.addEventListener("click", () => onLike(likeButton));
-  cardImage.addEventListener("click", () => onImageClick(link, name));
+  cardImage.addEventListener("click", () => openPopUpImage(link, name));
 
   return cardElement;
 }
@@ -33,22 +33,11 @@ export function deleteCard(cardElement) {
 // @todo: Функция вывода всех карточек на страницу
 export function renderCards(cards) {
   cards.forEach((card) => {
-    placesList.append(createCard(card.name, card.link, deleteCard, likeCard, openPopUpImage));
-});
+    placesList.append(createCard(card.name, card.link, deleteCard, likeCard));
+  });
 }
 
 // @todo: Функция лайка
 export function likeCard(likeButton) {
-    likeButton.classList.toggle("card__like-button_is-active");
-}
-
-export function openPopUpImage(link, name) {
-  const popupTypeImage = document.querySelector(".popup_type_image");
-  const popUpImage = popupTypeImage.querySelector(".popup__image");
-  const popUpCaption = popupTypeImage.querySelector(".popup__caption"); 
-
-  popUpImage.src = link;
-  popUpImage.alt = name;
-  popUpCaption.textContent = name;
-  openPopUp(popupTypeImage);
+  likeButton.classList.toggle("card__like-button_is-active");
 }

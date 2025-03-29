@@ -1,16 +1,13 @@
 import "../pages/index.css";
 import { initialCards } from "../components/cards";
-import { createCard, deleteCard, renderCards, likeCard, openPopUpImage } from "../components/card";
-import { openPopUp, closePopUp } from "../components/modal";
+import { createCard, deleteCard, renderCards, likeCard } from "../components/card";
+import { openPopUp, closePopUp, openPopUpImage } from "../components/modal";
 
 // @todo: DOM узлы
 
 // DOM узлы: Кнопки
 const editProfileButton = document.querySelector(".profile__edit-button");
 const addProfileButton = document.querySelector(".profile__add-button");
-
-// DOM узлы: Все PopUp's
-const popups = document.querySelectorAll(".popup");
 
 // DOM узлы: Для карточек
 const cardsContainer = document.querySelector(".places__list");
@@ -29,21 +26,6 @@ const profileBio = document.querySelector(".profile__description");
 
 // @todo: Выводит все карточки из массива initialCards файла cards.js
 renderCards(initialCards);
-
-// @todo: Функций закрытия popup через крестик для всех popup
-popups.forEach((popup) => {
-    const closeButton = popup.querySelector(".popup__close");
-  
-    closeButton.addEventListener("click", () => closePopUp(popup));
-  
-    popup.addEventListener("mousedown", (event) => {
-      if (event.target === event.currentTarget) {
-        closePopUp(popup);
-      }
-    });
-  
-    popup.classList.add("popup_is-animated");
-});
 
 // @todo: Функция добавления новой карточки
 function addNewCard(evt) {
