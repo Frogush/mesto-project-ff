@@ -1,9 +1,8 @@
 import "../pages/index.css";
-import { initialCards } from "../components/cards";
-import { createCard, deleteCard, renderCards, likeCard } from "../components/card";
-import { openPopUp, closePopUp, openPopUpImage } from "../components/modal";
 
-// @todo: DOM узлы
+import { initialCards } from "../components/cards";
+import { createCard, deleteCard, likeCard } from "../components/card";
+import { openPopUp, closePopUp } from "../components/modal";
 
 // DOM узлы: Кнопки
 const editProfileButton = document.querySelector(".profile__edit-button");
@@ -24,54 +23,82 @@ const inputDescription = formEditProfile.querySelector(".popup__input_type_descr
 const profileName = document.querySelector(".profile__title");
 const profileBio = document.querySelector(".profile__description");
 
-// @todo: Выводит все карточки из массива initialCards файла cards.js
+// DOM узлы: Попап изображения
+const popupTypeImage = document.querySelector(".popup_type_image");
+const popUpImage = popupTypeImage.querySelector(".popup__image");
+const popUpCaption = popupTypeImage.querySelector(".popup__caption");
+
+// Вывод всех карточек из массива initialCards
+function renderCards(cards) {
+  cards.forEach((card) => {
+    cardsContainer.append(createCard(card.name, card.link, deleteCard, likeCard, openPopUpImage));
+  });
+}
+
 renderCards(initialCards);
 
-// @todo: Функция добавления новой карточки
+// Функция добавления новой карточки
 function addNewCard(evt) {
-    evt.preventDefault();
-  
-    const cardData = {
-      name: inputCardName.value,
-      link: inputCardUrl.value,
-    };
-  
-    const card = createCard(cardData.name, cardData.link, deleteCard, likeCard, openPopUpImage);
-  
-    cardsContainer.prepend(card);
-    closePopUp(popupNewCard);
-  
-    formNewCard.reset();
+  evt.preventDefault();
+
+  const cardData = {
+    name: inputCardName.value,
+    link: inputCardUrl.value,
+  };
+
+  const card = createCard(cardData.name, cardData.link, deleteCard, likeCard, openPopUpImage);
+
+  cardsContainer.prepend(card);
+  closePopUp(popupNewCard);
+
+  formNewCard.reset();
 }
 
-// @todo: Функция редактирования профиля
+// Функция редактирования профиля
 function addNewProfile(evt) {
-    evt.preventDefault();
-  
-    profileName.textContent = inputName.value;
-    profileBio.textContent = inputDescription.value;
-  
-    closePopUp(popupEditProfile);
-  
-    formEditProfile.reset();
+  evt.preventDefault();
+
+  profileName.textContent = inputName.value;
+  profileBio.textContent = inputDescription.value;
+
+  closePopUp(popupEditProfile);
 }
 
-// @todo: Функция заполнения полей профиля перед открытием попапа
+// Функция заполнения полей профиля перед открытием попапа
 function addProfileValues() {
-    inputName.value = profileName.textContent;
-    inputDescription.value = profileBio.textContent;
+  inputName.value = profileName.textContent;
+  inputDescription.value = profileBio.textContent;
 }
 
-// @todo: Добавляем обработчики событий для открытия попапов
+// Функция открытия попапа с изображением
+function openPopUpImage(link, name) {
+  popUpImage.src = link;
+  popUpImage.alt = name;
+  popUpCaption.textContent = name;
+  openPopUp(popupTypeImage);
+}
+
+// Добавляем обработчики событий для открытия попапов
 editProfileButton.addEventListener("click", () => {
-    openPopUp(popupEditProfile);
-    addProfileValues();
+  openPopUp(popupEditProfile);
+  addProfileValues();
 });
 
-addProfileButton.addEventListener("click", () =>
-    openPopUp(popupNewCard)
-);
+addProfileButton.addEventListener("click", () => openPopUp(popupNewCard));
 
-// @todo: Добавляем обработчики событий для форм
+// Добавляем обработчики событий для форм
 formEditProfile.addEventListener("submit", addNewProfile);
 formNewCard.addEventListener("submit", addNewCard);
+
+// Обработчики закрытия попапов через крестик и оверлей
+document.querySelectorAll(".popup").forEach((popup) => {
+  const closeButton = popup.querySelector(".popup__close");
+
+  closeButton.addEventListener("click", () => closePopUp(popup));
+
+  popup.addEventListener("mousedown", (event) => {
+    if (event.target.classList.contains("popup")) {
+      closePopUp(popup);
+    }
+  });
+});
