@@ -8,6 +8,9 @@ import { openPopUp, closePopUp } from "../components/modal";
 const editProfileButton = document.querySelector(".profile__edit-button");
 const addProfileButton = document.querySelector(".profile__add-button");
 
+// DOM узлы: Все PopUp's 
+const popups = document.querySelectorAll(".popup"); 
+
 // DOM узлы: Для карточек
 const cardsContainer = document.querySelector(".places__list");
 const popupNewCard = document.querySelector(".popup_type_new-card");
@@ -91,7 +94,7 @@ formEditProfile.addEventListener("submit", addNewProfile);
 formNewCard.addEventListener("submit", addNewCard);
 
 // Обработчики закрытия попапов через крестик и оверлей
-document.querySelectorAll(".popup").forEach((popup) => {
+popups.forEach((popup) => {
   const closeButton = popup.querySelector(".popup__close");
 
   closeButton.addEventListener("click", () => closePopUp(popup));
