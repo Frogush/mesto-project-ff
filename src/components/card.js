@@ -14,6 +14,11 @@ export function createCard(card, onDelete, handleLike, onImageClick, userId) {
   cardTitle.textContent = card.name;
   likeCounter.textContent = card.likes.length;
 
+  const isLikedByUser = card.likes.some(like => like._id === userId);
+  if (isLikedByUser) {
+    likeButton.classList.add("card__like-button_is-active");
+  }
+
   if (card.owner._id !== userId) {
     deleteButton.style.display = "none";
   }

@@ -1,3 +1,1 @@
-# Проектная работа Mesto
-
-https://github.com/Frogush/mesto-project-ff
+https://frogush.github.io/mesto-project-ff/
